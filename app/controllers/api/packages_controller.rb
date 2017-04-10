@@ -2,11 +2,12 @@ class Api::PackagesController < ApplicationController
   protect_from_forgery with: :null_session
 
   def from_webhooks
-    @package = Package.find_by(package_id: params[:body][:id])
+    data = JSON.parse(params[:body])
+    @package = Package.find_by(package_id: data['id'])
     if @package.blank?
-      @package = Package.create(package_id: params[:body][:id], data: params[:body])
+      @package = Package.create(package_id: data['id'], data: data)
     else
-      @package = Package.update(data: params[:body])
+      @package = Package.update(data: data)
     end
     render json: { package: @package }, status: :ok
   end
