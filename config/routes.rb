@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   namespace :api do
     post '/from_webhooks', to: 'packages#from_webhooks'
+    patch '/from_webhooks', to: 'packages#from_webhooks'
   end
 end
